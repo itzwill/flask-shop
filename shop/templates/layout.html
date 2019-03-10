@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 
-
 <html>
-
-
 <head>
-
 
   <meta charset="utf-8">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
@@ -14,22 +10,35 @@
 
 <body>
   <div id="header">
-    <a href="{{ url_for('home') }}" class="header">Home</a>
+    <a href="{{ url_for('home') }}" class="glyphicon glyphicon-home">Home</a>
 	&nbsp
 	<a href="{{ url_for('about') }}" class="header">About Us</a>
 	&nbsp &nbsp
 	{% if session.logged_in %}
 		<p style="display:inline">Greetings {{session.username}}</p>
 		&nbsp
-		<a href="{{ url_for('logout') }}" class="header"> Logout </a>
+		<a href="{{ url_for('logout') }}" class="glyphicon glyphicon-log-out"> Logout </a>
 	{% else %}
+		Hello, Guest!
 		&nbsp
-		<a href="{{ url_for('register') }}" class="header"> Register </a>
+		<a href="{{ url_for('register') }}" class="	glyphicon glyphicon-edit"> Register </a>
 		&nbsp
-		<a href="{{ url_for('login') }}" class="header"> Log in </a>
+		<a href="{{ url_for('login') }}" class="glyphicon glyphicon-log-in"> Log in </a>
 	{% endif %}
   </div>
-
+  
+  <div>
+	{% with messages = get_flashed_messages() %}
+	  {% if messages %}
+		<ul class=flashes>
+		{% for message in messages %}
+		 <li>{{ message }}</li>
+		{% endfor %}
+		</ul>
+	  {% endif %}
+	{% endwith %}
+  </div>
+  
   <div id="content">
     {% block content %}
     {% endblock %}
