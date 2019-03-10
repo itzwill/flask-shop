@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% for book in books %}
+		<a href="{{ url_for('book', book_id=book.id) }}"><br />{{ book.title }}</a>
+		<a href="{{ url_for('book', book_id=book.id) }}"><br /> &nbsp <img scr="../static/img/{{ book.image_file }}"
+			style="width:82px; height:86px" title="{{ book.image_file }}" alt="Book Cover"></a>
+		<p> &nbsp Author: {{ book.author.first_name }}
+			&nbsp{{ book.author.last_name }}</p>
+		<p> &nbsp Price: £{{ book.price}}</p>
+	{% endfor %}
+
+{% endblock content %}

@@ -17,6 +17,17 @@
     <a href="{{ url_for('home') }}" class="header">Home</a>
 	&nbsp
 	<a href="{{ url_for('about') }}" class="header">About Us</a>
+	&nbsp &nbsp
+	{% if session.logged_in %}
+		<p style="display:inline">Greetings {{session.username}}</p>
+		&nbsp
+		<a href="{{ url_for('logout') }}" class="header"> Logout </a>
+	{% else %}
+		&nbsp
+		<a href="{{ url_for('register') }}" class="header"> Register </a>
+		&nbsp
+		<a href="{{ url_for('login') }}" class="header"> Log in </a>
+	{% endif %}
   </div>
 
   <div id="content">

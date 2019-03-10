@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% for book in books %}
+		<p><img scr="../static/img/{{ book.image_file }}"
+			style="width:82px; height:86px" title="{{ book.image_file }}" alt="Book Cover"></p>
+		<p>"{{ book.title }}" &nbsp
+			Author: {{ book.author.first_name }}
+			&nbsp{{ book.author.last_name }}</p>
+	{% endfor %}
+
+{% endblock content %}
