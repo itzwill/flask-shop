@@ -24,7 +24,7 @@
 </table>
 <h3>Total: £{{ total }} </h3>
 <h3>Number of items: {{ total_quantity }} </h3>
-<h2><a href="{{ url_for('home', sort_method=0) }}"> Continue Shopping </a><h2>
+<h3><a href="{{ url_for('home', sort_method=0) }}"> Continue Shopping </a><h3>
 <h2><a href="{{ url_for('checkout', sort_method=0) }}"> Proceed to Payment </a><h2>
 
 {% endblock content %}

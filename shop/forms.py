@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import DateTimeField, IntegerField, StringField, PasswordField, SubmitField, SelectField, BooleanField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp
+from wtforms import DateField, IntegerField, StringField, PasswordField, SubmitField, SelectField, BooleanField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp, NumberRange
+from datetime import datetime
 from shop.models import User
-
+now = datetime.now()
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired('Please enter your username'), Length(min=3, max=15)])
@@ -28,6 +29,8 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 	
 class PaymentForm(FlaskForm):
-	cardNumber = IntegerField('Card Number', validators=[DataRequired()])
-	expiryDate = DateTimeField('Expiry Date', format='%m/%y')
-	cvv = IntegerField('CVV', validators=[DataRequired()])
+	cardNumber = StringField('Card Number', validators=[DataRequired(), Regexp('[0-9]{16}$', message='Please enter a valid 16 digit card number.')])
+	expiryMonth = IntegerField('Expiry Date (mm/yyyy)', validators=[DataRequired(), NumberRange(min=1, max=12, message='Please enter a valid month.')])
+	expiryYear = IntegerField(' ', validators=[DataRequired(), NumberRange(min=now.year, max=2100, message='Please enter a year between the present year and 2100')])
+	cvv = StringField('CVV', validators=[DataRequired(), Regexp('[0-9]{3}$', message='Please enter your 3 digit CVV number (On the back of your card).')])
+	submit = SubmitField('Pay Now')

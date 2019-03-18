@@ -2,9 +2,11 @@ import os
 from flask import render_template, url_for, request, redirect, session, flash
 from shop import app, db
 from shop.models import Author, Book, User
-from shop.forms import RegistrationForm, LoginForm
+from shop.forms import RegistrationForm, LoginForm, PaymentForm
 from shop.models import Author, Book
 from flask_login import login_user, logout_user, LoginManager
+from datetime import datetime
+now = datetime.now()
 
 @app.route("/")
 
@@ -102,6 +104,9 @@ def delete_book(book_id):
 	session.modified = True
 	return redirect("/cart")
 	
-@app.route("/checkout")
+@app.route("/checkout",  methods=['GET', 'POST'])
 def checkout():
-	return render_template("checkout.html", title="Checkout")
+	form = PaymentForm()
+	if form.validate_on_submit():
+		flash("Thankyou, your payment was accepted.")
+	return render_template("checkout.html", title="Checkout", form=form)
