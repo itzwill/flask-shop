@@ -1,12 +1,21 @@
 {% extends "layout.html" %}
 {% block content %}
+	<div id="sort">
+		<h4>Sort products by:<h4>&nbsp;<a href="{{ url_for('home', sort_method=1)}}">Price</a>
+		&nbsp;<a href="{{ url_for('home', sort_method=2)}}">Title</a>
+	</div>
+	
+	<div id="products">
 	{% for book in books %}
-		<a href="{{ url_for('book', book_id=book.id) }}"><br />{{ book.title }}</a>
-		<a href="{{ url_for('book', book_id=book.id) }}"><br /> &nbsp <img scr="{{ url_for('static', filename='img/' + book.image_file) }}"
-			style="width:82px; height:86px" title="{{ book.image_file }}" alt="Book Cover"></a>
+		&nbsp;
+		<a href="{{ url_for('book', book_id=book.id) }}">{{ book.title }}</a>
+		<a href="{{ url_for('book', book_id=book.id) }}"><br /> &nbsp <img src="{{ url_for('static', filename='img/' + book.image_file) }}"
+			style="width:150px; height:200px" title="{{ book.image_file }}" alt="Book Cover"></a>
 		<p> &nbsp Author: {{ book.author.first_name }}
 			&nbsp{{ book.author.last_name }}</p>
 		<p> &nbsp Price: £{{ book.price}}</p>
+		&nbsp;<a class="" href="/add_to_cart/{{book.id}}"> Add to Cart<br /><br /><br /></a>
 	{% endfor %}
+	</div>
 
 {% endblock content %}

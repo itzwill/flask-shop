@@ -7,9 +7,17 @@ from shop.models import Author, Book
 from flask_login import login_user, logout_user, LoginManager
 
 @app.route("/")
-@app.route("/home")
-def home():
-	books = Book.query.all()
+
+@app.route("/home/<int:sort_method>")
+def home(sort_method):
+	if sort_method:
+		if sort_method == 1:
+			sort = 'price'
+		elif sort_method == 2:
+			sort = 'title'
+		books = Book.query.order_by(sort).all()
+	else:
+		books = Book.query.all()
 	return render_template('home.html', title='Home', books=books)
 	
 @app.route("/about")
@@ -40,15 +48,16 @@ def login():
 			login_user(user)
 			session['logged_in'] = True
 			session['username'] = user.username
-			return redirect(url_for('home'))
+			return redirect(url_for('home', sort_method=0))
 	return render_template('login.html', title='Login', form=form)
 	
 @app.route("/logout")
 def logout():
 	logout_user()
 	session.pop('username', None)
+	session.pop('cart', None)
 	session['logged_in'] = False
-	return redirect(url_for('home'))
+	return redirect(url_for('home', sort_method=0))
 
 @app.route("/registrationthanks")
 def registrationthanks():
@@ -92,3 +101,7 @@ def delete_book(book_id):
 	flash("The book has been removed from your shopping cart!")
 	session.modified = True
 	return redirect("/cart")
+	
+@app.route("/checkout")
+def checkout():
+	return render_template("checkout.html", title="Checkout")

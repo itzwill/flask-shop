@@ -10,7 +10,7 @@
 
 <body>
   <div id="header">
-    <a href="{{ url_for('home') }}" class="glyphicon glyphicon-home">Home</a>
+    <a href="{{ url_for('home', sort_method=0) }}" class="glyphicon glyphicon-home">Home</a>
 	&nbsp
 	<a href="{{ url_for('about') }}" class="header">About Us</a>
 	&nbsp &nbsp
@@ -25,6 +25,8 @@
 		&nbsp
 		<a href="{{ url_for('login') }}" class="glyphicon glyphicon-log-in"> Log in </a>
 	{% endif %}
+	&nbsp;
+	<a href="{{ url_for('cart_display') }}" class="header">My Cart</a>
   </div>
   
   <div>
