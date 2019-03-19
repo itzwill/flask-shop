@@ -48,3 +48,8 @@ class User(UserMixin, db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+	
+class Review(db.model):
+	rating = db.Column(db.Integer)
+	review = db.Column(db.String(300), nullable=False)
+	username = db.Column(db.String(15), unique=True, nullable=False)

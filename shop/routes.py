@@ -31,6 +31,16 @@ def book(book_id):
 	book = Book.query.get_or_404(book_id)
 	return render_template('book.html', title=book.title, book=book)
 	
+	form = ReviewForm()
+	if form.validate_on_submit():
+		if session['Username']:
+			review = Review(rating=form.rating.data, review=review.review.data, username=session['username'])
+			db.session.add(user)
+			db.session.commit()
+		else:
+			flash('You must be logged in to leave a review.')
+	return render_template('book.html', title=book.title, book=book)
+	
 @app.route("/register", methods=['GET', 'POST'])
 def register():
 	form = RegistrationForm()
@@ -58,6 +68,7 @@ def logout():
 	logout_user()
 	session.pop('username', None)
 	session.pop('cart', None)
+	session.pop('total',None)
 	session['logged_in'] = False
 	return redirect(url_for('home', sort_method=0))
 

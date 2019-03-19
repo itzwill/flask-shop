@@ -34,3 +34,7 @@ class PaymentForm(FlaskForm):
 	expiryYear = IntegerField(' ', validators=[DataRequired(), NumberRange(min=now.year, max=2100, message='Please enter a year between the present year and 2100')])
 	cvv = StringField('CVV', validators=[DataRequired(), Regexp('[0-9]{3}$', message='Please enter your 3 digit CVV number (On the back of your card).')])
 	submit = SubmitField('Pay Now')
+	
+class ReviewForm(FlaskForm):
+	rating = IntegerField('Rating (0-5)' validators=[DataRequired(), NumberRange(min=0, max=5, message='Rating must be between 0 and 5')])
+	review = StringField('Write a review for this book.' validators=[DataRequired(), Length(max=300, message='Your review must be under 300 characters long.')])

@@ -9,4 +9,23 @@
 	<p>Price: {{ book.price }}<br /></p>
 	<p>Description: {{ book.description }} </p>
 	<a class="" href="/add_to_cart/{{book.id}}"> Add to Cart</a>
+	
+	<form method="POST" action="">
+			{{ form.csrf_token }}
+	  <div class="">
+		{{ form.rating.label }} {{ form.rating}}
+		{% for error in form.rating.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+	  </div>
+	  <div class="">
+		{{ form.review.label }} {{ form.rating}}
+		{% for error in form.review.errors %}
+		<span style="color: red;">[{{ error }}]</span>
+		{% endfor %}
+	  </div>
+	  <div class="">
+		{{ form.submit() }}
+	  </div>
+	</form>
 {% endblock content %}
