@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+  <div class="bookDisplay">
 	<p><img src = "{{ url_for('static', filename='img/' + book.image_file) }}" style="width:300px; height:400px" title="{{ book.image_file }}" alt="Book Cover"></p>
 	<p> {{ book.title }} <br /> </p>
 	<p>	Author: {{ book.author.first_name }} 
@@ -9,9 +10,12 @@
 	<p>Price: {{ book.price }}<br /></p>
 	<p>Description: {{ book.description }} </p>
 	<a class="" href="/add_to_cart/{{book.id}}"> Add to Cart</a>
-	
+   </div>
+   
+   <div class="writeReview">
+   <p><br />Leave a review of this book: </p>
 	<form method="POST" action="">
-			{{ form.csrf_token }}
+		{{ form.csrf_token }}
 	  <div class="">
 		{{ form.rating.label }} {{ form.rating}}
 		{% for error in form.rating.errors %}
@@ -19,7 +23,7 @@
 		{% endfor %}
 	  </div>
 	  <div class="">
-		{{ form.review.label }} {{ form.rating}}
+		{{ form.review.label }} {{ form.review }}
 		{% for error in form.review.errors %}
 		<span style="color: red;">[{{ error }}]</span>
 		{% endfor %}
@@ -27,5 +31,14 @@
 	  <div class="">
 		{{ form.submit() }}
 	  </div>
-	</form>
+	 </form>
+	</div>
+	<div class="reviews">
+	{% for review in reviews %}
+		&nbsp;
+		<p>&nbsp;<b>{{review.username}}</b><p>
+		<p>&nbsp; {{ review.rating }} / 5 Stars </p>
+		<p>&nbsp; {{review.review }} <br /><p>
+	{% endfor %}
+	</div>
 {% endblock content %}

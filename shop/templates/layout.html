@@ -17,18 +17,18 @@
 	{% if session.logged_in %}
 		<p style="display:inline">Greetings {{session.username}}</p>
 		&nbsp
-		<a href="{{ url_for('logout') }}" class="glyphicon glyphicon-log-out"> Logout </a>
+		<a href="{{ url_for('logout') }}" class="header"> Logout </a>
 	{% else %}
 		Hello, Guest!
 		&nbsp
-		<a href="{{ url_for('register') }}" class="	glyphicon glyphicon-edit"> Register </a>
+		<a href="{{ url_for('register') }}" class="header"> Register </a>
 		&nbsp
 		<a href="{{ url_for('login') }}" class="glyphicon glyphicon-log-in"> Log in </a>
 	{% endif %}
 	&nbsp;
 	<a href="{{ url_for('cart_display') }}" class="header">My Cart</a>
   </div>
-  
+
   <div>
 	{% with messages = get_flashed_messages() %}
 	  {% if messages %}

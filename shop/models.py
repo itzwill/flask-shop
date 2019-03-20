@@ -49,7 +49,9 @@ class User(UserMixin, db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 	
-class Review(db.model):
+class Review(db.Model):
+	id = db.Column(db.Integer, primary_key=True)
+	book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
 	rating = db.Column(db.Integer)
 	review = db.Column(db.String(300), nullable=False)
 	username = db.Column(db.String(15), unique=True, nullable=False)

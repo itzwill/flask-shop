@@ -1,9 +1,8 @@
 import os
 from flask import render_template, url_for, request, redirect, session, flash
 from shop import app, db
-from shop.models import Author, Book, User
-from shop.forms import RegistrationForm, LoginForm, PaymentForm
-from shop.models import Author, Book
+from shop.models import Author, Book, User, Review
+from shop.forms import RegistrationForm, LoginForm, PaymentForm, ReviewForm
 from flask_login import login_user, logout_user, LoginManager
 from datetime import datetime
 now = datetime.now()
@@ -26,20 +25,23 @@ def home(sort_method):
 def about():
 	return render_template('about.html', title='About')
 	
-@app.route("/book/<int:book_id>")
+@app.route("/book/<int:book_id>", methods=['GET', 'POST'])
 def book(book_id):
-	book = Book.query.get_or_404(book_id)
-	return render_template('book.html', title=book.title, book=book)
-	
 	form = ReviewForm()
+	book = Book.query.get_or_404(book_id)
+	reviews = Review.query.filter(Review.book_id == book_id)
+	
 	if form.validate_on_submit():
-		if session['Username']:
-			review = Review(rating=form.rating.data, review=review.review.data, username=session['username'])
-			db.session.add(user)
+		if session['logged_in']:
+			review = Review(book_id=book_id, rating=form.rating.data, review=form.review.data, username=session['username'])
+			db.session.add(review)
 			db.session.commit()
+			flash('Thanks for taking the time to review this product!')
+			return redirect(url_for('book', book_id=book_id))
 		else:
 			flash('You must be logged in to leave a review.')
-	return render_template('book.html', title=book.title, book=book)
+	
+	return render_template('book.html', title=book.title, book=book, reviews=reviews, form=form)
 	
 @app.route("/register", methods=['GET', 'POST'])
 def register():
