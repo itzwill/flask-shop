@@ -8,6 +8,9 @@ from datetime import datetime
 now = datetime.now()
 
 @app.route("/")
+@app.route("/main")
+def main():
+	return redirect(url_for('home', sort_method=0))
 
 @app.route("/home/<int:sort_method>")
 def home(sort_method):
@@ -71,6 +74,7 @@ def logout():
 	session.pop('username', None)
 	session.pop('cart', None)
 	session.pop('total',None)
+	session.pop('wishline', None)
 	session['logged_in'] = False
 	return redirect(url_for('home', sort_method=0))
 
@@ -116,6 +120,37 @@ def delete_book(book_id):
 	flash("The book has been removed from your shopping cart!")
 	session.modified = True
 	return redirect("/cart")
+	
+@app.route("/add_to_wishlist/<int:book_id>")
+def add_to_wishlist(book_id):
+	if "wishlist" not in session:
+		session["wishlist"] = []
+	session["wishlist"].append(book_id)
+	flash("The book is added to your wishlist!")
+	return redirect("/wishlist")
+	
+@app.route("/wishlist", methods=['GET', 'POST'])
+def wishlist_display():
+	if "wishlist" not in session:
+		flash('There are no items on your wishlist.')
+		return render_template('wishlist.html', display_wishlist = {})
+	else:
+		items=session["wishlist"]
+		wishlist = {}
+		for item in items:
+			book = Book.query.get_or_404(item)
+			wishlist[book.id] = {"id":book.id, "title":book.title, "price":book.price}
+		return render_template("wishlist.html", title='Your Wishlist', display_wishlist=wishlist)
+	return render_template('wishlist.html')
+	
+@app.route("/delete_wished_book/<int:book_id>", methods=['POST'])
+def delete_wished_book(book_id):
+	if 'wishlist' not in session:
+		session["wishlist"] = []
+	session["wishlist"].remove(book_id)
+	flash("The book has been removed from your wishlist!")
+	session.modified = True
+	return redirect("/wishlist")
 	
 @app.route("/checkout",  methods=['GET', 'POST'])
 def checkout():

@@ -38,4 +38,8 @@ a:hover {
 #content {
 	margin: 20px;
 }
+#contact {
+	position: relative;
+	left: 300px;
+}
 

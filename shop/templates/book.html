@@ -9,7 +9,7 @@
 	</p>
 	<p>Price: {{ book.price }}<br /></p>
 	<p>Description: {{ book.description }} </p>
-	<a class="" href="/add_to_cart/{{book.id}}"> Add to Cart</a>
+	<a class="" href="/add_to_cart/{{book.id}}"> Add to Cart</a>&nbsp;&nbsp;<a class="" href="/add_to_wishlist/{{book.id}}"> Add to Wishlist</a>
    </div>
    
    <div class="writeReview">
@@ -23,7 +23,7 @@
 		{% endfor %}
 	  </div>
 	  <div class="">
-		{{ form.review.label }} {{ form.review }}
+		<br/>{{ form.review.label }} <p>{{ form.review(cols="80", rows="2") }}</p>
 		{% for error in form.review.errors %}
 		<span style="color: red;">[{{ error }}]</span>
 		{% endfor %}
@@ -38,7 +38,7 @@
 		&nbsp;
 		<p>&nbsp;<b>{{review.username}}</b><p>
 		<p>&nbsp; {{ review.rating }} / 5 Stars </p>
-		<p>&nbsp; {{review.review }} <br /><p>
+		<p>&nbsp; {{review.review}} <br /><p>
 	{% endfor %}
 	</div>
 {% endblock content %}

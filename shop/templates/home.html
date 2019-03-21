@@ -14,7 +14,7 @@
 		<p> &nbsp Author: {{ book.author.first_name }}
 			&nbsp{{ book.author.last_name }}</p>
 		<p> &nbsp Price: £{{ book.price}}</p>
-		&nbsp;<a class="" href="/add_to_cart/{{book.id}}"> Add to Cart<br /><br /><br /></a>
+		&nbsp;<a class="" href="/add_to_cart/{{book.id}}"> Add to Cart</a>&nbsp;&nbsp;<a class="" href="/add_to_wishlist/{{book.id}}"> Add to Wishlist <br /><br /><br /></a>
 	{% endfor %}
 	</div>
 

@@ -1,2 +1,10 @@
 venv/
 __pycache__/
+.DS_Store
+__pycache__/
+venv/
+.project
+*.pyc
+*.pyo
+*~
+X*.py

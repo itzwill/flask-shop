@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import DateField, IntegerField, StringField, PasswordField, SubmitField, SelectField, BooleanField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Regexp, NumberRange
+from wtforms.widgets import TextArea
 from datetime import datetime
 from shop.models import User
 now = datetime.now()
@@ -36,7 +37,7 @@ class PaymentForm(FlaskForm):
 	submit = SubmitField('Pay Now')
 	
 class ReviewForm(FlaskForm):
-	rating = IntegerField('Rating (0-5)', validators=[DataRequired(), NumberRange(min=0, max=5, message='Rating must be between 0 and 5')])
-	review = StringField('Write a review for this book.', validators=[DataRequired(message='oy'), Length(max=300, message='Your review must be under 300 characters long.')])
+	rating = IntegerField('Rating (0-5)', validators=[DataRequired(message="This field requires a number from 0 to 5"), NumberRange(min=0, max=5, message='Rating must be between 0 and 5')])
+	review = StringField('Write a review for this book.', widget=TextArea(), validators=[DataRequired(message='You must write a short review (up to 300 characters).'), Length(max=300, message='Your review must be under 300 characters long.')])
 	submit = SubmitField('Publish Review')
 	
